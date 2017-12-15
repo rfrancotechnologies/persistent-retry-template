@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard1.4;net45</TargetFramework>
+    <TargetFrameworks>netstandard1.4;net45</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="LiteDB" Version="4.0.0" />

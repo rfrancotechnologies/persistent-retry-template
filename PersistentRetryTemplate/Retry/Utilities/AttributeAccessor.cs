@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace PersistentRetryTemplate.Utilities 
+namespace PersistentRetryTemplate.Retry.Utilities 
 {
     public class AttributeAccessor
     {

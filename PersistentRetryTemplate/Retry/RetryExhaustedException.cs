@@ -1,6 +1,6 @@
 using System;
 
-namespace PersistentRetryTemplate 
+namespace PersistentRetryTemplate.Retry
 {
     public class RetryExhaustedException: RetryException
     {

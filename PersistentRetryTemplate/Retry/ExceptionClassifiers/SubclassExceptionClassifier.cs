@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace PersistentRetryTemplate.ExceptionClassifiers {
+namespace PersistentRetryTemplate.Retry.ExceptionClassifiers {
     public class SubclassExceptionClassifier: IExceptionClassifier {
 
         public ConcurrentDictionary<Type, bool> Classified { get; set; }

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using PersistentRetryTemplate.BackOffPolicies;
-using PersistentRetryTemplate.RetryPolicies;
+using PersistentRetryTemplate.Retry.BackOffPolicies;
+using PersistentRetryTemplate.Retry.RetryPolicies;
 
-namespace PersistentRetryTemplate
+namespace PersistentRetryTemplate.Retry
 {
     public interface IRetryTemplate
     {
@@ -13,15 +13,9 @@ namespace PersistentRetryTemplate
 
         PendingRetry<T> SaveForRetry<T>(string operationId, T argument);
 
+        IEnumerable<PendingRetry<T>> GetPendingRetries<T>(string operationId);
+
         R DoExecute<T, R>(PendingRetry<T> pendingRetry, Func<T, R> retryCallback, Func<T, R> recoveryCallback, 
                 CancellationToken cancellationToken);
-
-        BatchOperation<T> StartBatchOperation<T>(string operationId);
-
-        IEnumerable<BatchOperation<T>> GetPendingBatchOperations<T>(string operationId);
-
-        void CompleteBatch<T>(BatchOperation<T> batchOperation);
-
-        void ExecuteRecoveryCallback();
     }
 }

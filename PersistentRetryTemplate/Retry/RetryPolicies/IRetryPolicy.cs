@@ -1,6 +1,6 @@
 using System;
 
-namespace PersistentRetryTemplate.RetryPolicies
+namespace PersistentRetryTemplate.Retry.RetryPolicies
 {
     public interface IRetryPolicy
     {

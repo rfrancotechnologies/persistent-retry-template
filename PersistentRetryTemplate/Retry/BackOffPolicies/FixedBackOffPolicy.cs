@@ -1,9 +1,11 @@
 
 using System.Threading;
-using PersistentRetryTemplate.RetryPolicies;
+using PersistentRetryTemplate.Retry.RetryPolicies;
 
-namespace PersistentRetryTemplate.BackOffPolicies {
-    public class FixedBackOffPolicy: IBackOffPolicy {
+namespace PersistentRetryTemplate.Retry.BackOffPolicies 
+{
+    public class FixedBackOffPolicy: IBackOffPolicy 
+    {
         private const int DEFAULT_BACK_OFF_PERIOD = 1000;
 
         private int backOffPeriod;
@@ -17,7 +19,8 @@ namespace PersistentRetryTemplate.BackOffPolicies {
             this.backOffPeriod = backOffPeriod;
         }
 
-        public int BackOffPeriod { 
+        public int BackOffPeriod 
+        { 
             get
             {
                 return backOffPeriod;
@@ -29,11 +32,13 @@ namespace PersistentRetryTemplate.BackOffPolicies {
             } 
         }
 
-        public void BackOff() {
+        public void BackOff() 
+        {
             Thread.Sleep(backOffPeriod);
         }
 
-        public override string ToString() {
+        public override string ToString() 
+        {
             return "FixedBackOffPolicy[backOffPeriod=" + backOffPeriod + "]";
         }
 

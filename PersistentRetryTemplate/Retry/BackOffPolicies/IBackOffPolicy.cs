@@ -1,7 +1,6 @@
 using System;
-using PersistentRetryTemplate.RetryPolicies;
 
-namespace PersistentRetryTemplate.BackOffPolicies
+namespace PersistentRetryTemplate.Retry.BackOffPolicies
 {
     public interface IBackOffPolicy
     {

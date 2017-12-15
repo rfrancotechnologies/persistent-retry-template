@@ -1,6 +1,6 @@
 using System;
 
-namespace PersistentRetryTemplate.ExceptionClassifiers
+namespace PersistentRetryTemplate.Retry.ExceptionClassifiers
 {
     public interface IExceptionClassifier
     {
