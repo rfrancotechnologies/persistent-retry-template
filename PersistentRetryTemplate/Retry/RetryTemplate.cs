@@ -55,17 +55,20 @@ namespace PersistentRetryTemplate.Retry
                 retryPolicy.StartContext();
                 backOffPolicy.StartContext();
 
-                while (retryPolicy.CanRetry(lastException) && !cancellationToken.IsCancellationRequested) {
+                while (retryPolicy.CanRetry(lastException) && !cancellationToken.IsCancellationRequested) 
+                {
                     try {
                         lastException = null;
                         R result = retryCallback.Invoke(pendingRetry.Argument);
                         collection.Delete(pendingRetry.Id);
                         return result;
                     }
-                    catch (Exception e) {
+                    catch (Exception e) 
+                    {
                         lastException = e;
 
-                        if (retryPolicy.CanRetry(lastException) && !cancellationToken.IsCancellationRequested) {
+                        if (retryPolicy.CanRetry(lastException) && !cancellationToken.IsCancellationRequested) 
+                        {
                             backOffPolicy.BackOff();
                         }
                     }

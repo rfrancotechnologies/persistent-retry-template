@@ -43,7 +43,7 @@ namespace PersistentRetryTemplate.Retry.RetryPolicies
             count = 0;
         }
 
-        public String toString() {
+        public override string ToString() {
             return "SimpleRetryPolicy " + "[maxAttempts=" + maxAttempts + "]";
         }
     }
