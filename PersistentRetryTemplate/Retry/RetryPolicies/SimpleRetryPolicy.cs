@@ -21,14 +21,14 @@ namespace PersistentRetryTemplate.Retry.RetryPolicies
             count = 0;
         }
 
-        public SimpleRetryPolicy(int maxAttempts, Dictionary<Type, bool> specificExceptions): base(specificExceptions)
+        public SimpleRetryPolicy(int maxAttempts, Dictionary<Type, bool> retriableExceptions): base(retriableExceptions)
         {
             this.maxAttempts = maxAttempts;
             count = 0;
         }
 
-        public SimpleRetryPolicy(int maxAttempts, Dictionary<Type, bool> specificExceptions, bool defaultRetryability)
-            :base(specificExceptions, defaultRetryability)
+        public SimpleRetryPolicy(int maxAttempts, Dictionary<Type, bool> retriableExceptions, bool defaultRetryability)
+            :base(retriableExceptions, defaultRetryability)
 
         {
             this.maxAttempts = maxAttempts;
@@ -41,6 +41,11 @@ namespace PersistentRetryTemplate.Retry.RetryPolicies
 
         public override void StartContext() {
             count = 0;
+        }
+
+        public override void RegisterRetry(Exception exception) 
+        {
+            count++;
         }
 
         public override string ToString() {

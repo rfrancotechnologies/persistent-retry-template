@@ -6,7 +6,7 @@ using PersistentRetryTemplate.Retry;
 using PersistentRetryTemplate.Retry.RetryPolicies;
 using Xunit;
 
-namespace PersistentRetryTemplate.Tests
+namespace PersistentRetryTemplate.Retry
 {
     public class RetryTemplateTests
     {
@@ -116,14 +116,8 @@ namespace PersistentRetryTemplate.Tests
         [Fact]
         public void ShouldRetryOnExceptionsWhileTheRetryPolicySaysSoAndFinishWithARetryExhaustedException()
         {
-            Mock<IRetryPolicy> mockRetryPolicy = new Mock<IRetryPolicy>();
-            mockRetryPolicy.SetupSequence(x => x.CanRetry(It.IsAny<Exception>()))
-                    .Returns(true)
-                    .Returns(true)
-                    .Returns(false);
-
             RetryTemplate retryTemplate = new RetryTemplate(Path.GetTempFileName());
-            retryTemplate.RetryPolicy = mockRetryPolicy.Object;
+            retryTemplate.RetryPolicy = new SimpleRetryPolicy(3);
 
             string testOperationId = "test.operation";
             string testArgument = "test argument";

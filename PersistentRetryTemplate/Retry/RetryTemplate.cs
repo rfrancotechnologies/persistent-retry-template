@@ -69,6 +69,7 @@ namespace PersistentRetryTemplate.Retry
 
                         if (retryPolicy.CanRetry(lastException) && !cancellationToken.IsCancellationRequested) 
                         {
+                            retryPolicy.RegisterRetry(lastException);
                             backOffPolicy.BackOff();
                         }
                     }

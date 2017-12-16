@@ -23,10 +23,6 @@ namespace PersistentRetryTemplate.Retry.ExceptionClassifiers {
             this.DefaultValue = defaultValue;
         }
 
-        public void setTypeMap(Dictionary<Type, bool> typeMap) {
-            this.Classified = new ConcurrentDictionary<Type, bool>(typeMap);
-        }
-
         public bool Classify(Exception classifiable) {
             if (classifiable == null) {
                 return DefaultValue;

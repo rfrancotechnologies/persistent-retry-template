@@ -7,7 +7,11 @@ namespace PersistentRetryTemplate.Retry.RetryPolicies
     public class AlwaysRetryPolicy: IRetryPolicy {
         public bool CanRetry(Exception exception)
         {
-            return false;
+            return true;
+        }
+
+        public void RegisterRetry(Exception exception)
+        {
         }
 
         public void StartContext()

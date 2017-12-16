@@ -10,6 +10,10 @@ namespace PersistentRetryTemplate.Retry.RetryPolicies
             return false;
         }
 
+        public void RegisterRetry(Exception exception)
+        {
+        }
+
         public void StartContext()
         {
         }

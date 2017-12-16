@@ -12,13 +12,13 @@ namespace PersistentRetryTemplate.Retry.RetryPolicies
         {
         }
 
-        protected AbstractSubclassRetryPolicy(Dictionary<Type, bool> specificExceptions): this(specificExceptions, false)
+        protected AbstractSubclassRetryPolicy(Dictionary<Type, bool> retriableExceptions): this(retriableExceptions, false)
         {
         }
 
-        protected AbstractSubclassRetryPolicy(Dictionary<Type, bool> specificExceptions, bool defaultRetryability)
+        protected AbstractSubclassRetryPolicy(Dictionary<Type, bool> retriableExceptions, bool defaultRetryability)
         {
-            retryableClassifier = new SubclassExceptionClassifier(specificExceptions, defaultRetryability);
+            retryableClassifier = new SubclassExceptionClassifier(retriableExceptions, defaultRetryability);
         }
 
         public bool CanRetry(Exception exception) {
@@ -33,6 +33,10 @@ namespace PersistentRetryTemplate.Retry.RetryPolicies
             var retryableExceptions = new Dictionary<Type, Boolean>();
             retryableExceptions.Add(typeof(Exception), true);
             return retryableExceptions;
+        }
+
+        public virtual void RegisterRetry(Exception exception)
+        {
         }
     }
 }
