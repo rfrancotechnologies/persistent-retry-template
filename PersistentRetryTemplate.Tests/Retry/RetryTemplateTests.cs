@@ -24,6 +24,21 @@ namespace PersistentRetryTemplate.Retry
         }
 
         [Fact]
+        public void ShouldPersistThePendingRetriesAfterCreateNewInstancesOfTheRetryTemplate() 
+        {
+            string testOperationId = "test.operation";
+            string testArgument = "test argument";
+            string tempFileName = Path.GetTempFileName();
+            RetryTemplate retryTemplate = new RetryTemplate(tempFileName);
+            var pendingRetry = retryTemplate.SaveForRetry<string>(testOperationId, testArgument);
+
+            retryTemplate = new RetryTemplate(tempFileName);
+            var pendingRetries = retryTemplate.GetPendingRetries<string>(testOperationId);
+            Assert.Contains<PendingRetry<string>>(pendingRetries, (x) => 
+                    x.OperationId == testOperationId && x.Argument == testArgument);
+        }
+
+        [Fact]
         public void ShouldNotListSuccessfullyCompletedRetriesInThePendingRetries() 
         {
             RetryTemplate retryTemplate = new RetryTemplate(Path.GetTempFileName());

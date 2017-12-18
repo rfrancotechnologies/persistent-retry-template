@@ -34,7 +34,7 @@ namespace PersistentRetryTemplate.Retry.ExceptionClassifiers {
             }
 
             foreach (var type in Classified.Keys) {
-                if (exceptionType.GetTypeInfo().IsAssignableFrom(type.GetTypeInfo())) {
+                if (type.GetTypeInfo().IsAssignableFrom(exceptionType.GetTypeInfo())) {
                     bool value = Classified[type];
                     this.Classified.TryAdd(exceptionType, value);
                     return value;

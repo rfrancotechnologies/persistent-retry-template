@@ -34,7 +34,7 @@ namespace PersistentRetryTemplate.BatchOperations
             }
         }
 
-        public PendingRetry<List<T>> SaveRecoveryCallbackForRetries<T>(RetryTemplate retryTemplate, 
+        public PendingRetry<List<T>> SaveRecoveryCallbackForRetries<T>(IRetryTemplate retryTemplate, 
                 BatchOperation<T> batchOperation)
         {
             var pendingRetry = retryTemplate.SaveForRetry(batchOperation.OperationId, batchOperation.BatchData);

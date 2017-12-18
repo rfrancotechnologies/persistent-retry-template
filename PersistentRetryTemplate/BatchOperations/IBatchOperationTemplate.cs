@@ -12,7 +12,7 @@ namespace PersistentRetryTemplate.BatchOperations
 
         void CompleteBatch<T>(BatchOperation<T> batchOperation);
 
-        PendingRetry<List<T>> SaveRecoveryCallbackForRetries<T>(RetryTemplate retryTemplate, BatchOperation<T> batchOperation);
+        PendingRetry<List<T>> SaveRecoveryCallbackForRetries<T>(IRetryTemplate retryTemplate, BatchOperation<T> batchOperation);
 
         void AddBatchOperationData<T>(BatchOperation<T> batchOperation, T data);
     }
