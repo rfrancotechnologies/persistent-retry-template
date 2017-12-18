@@ -49,7 +49,7 @@ namespace PersistentRetryTemplate.Retry.RetryPolicies
         {
             var specifiedExceptions = new Dictionary<Type, bool>();
             specifiedExceptions.Add(typeof(TestParentException), true);
-            specifiedExceptions.Add(typeof(TestChildException), false);
+            specifiedExceptions.Add(typeof(TestGrandChildException), false);
             SubclassExceptionClassifier classifier = new SubclassExceptionClassifier(specifiedExceptions, false);
 
             Assert.True(classifier.Classify(new TestParentException()));
