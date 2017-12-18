@@ -1,5 +1,5 @@
 language: csharp
-mono: none
+mono: 4.5
 dotnet: 1.1.5
 script:
  - dotnet restore
