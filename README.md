@@ -138,6 +138,7 @@ It accepts three configuration properties:
 	* `Multiplier`: the amount that multiplies the current interval in each retry. In the first retry the wait interval will be `InitialInterval` and in subsequent retries the wait interval will be the previous interval multiplied by `Multiplier`.
 	* `MaxInterval`: the maximum amount of time that will be waited in any retry. 
 
+If no back-off policy is explicitly specified for a `RetryTemplate`, an `ExponentialBackOffPolicy` with an initial interval of 100 milliseconds, a maximum interval of 30 seconds, and a multipler by 2 will be used by default.
 
 #### Listing Pending Retries
 
