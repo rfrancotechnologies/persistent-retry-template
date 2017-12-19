@@ -2,8 +2,10 @@
 
 .NET library for retrying operations with persistence.
 
-[![NuGet Version](https://img.shields.io/nuget/v/PersistentRetryTemplate.svg?style=flat)](https://www.nuget.org/packages/PersistentRetryTemplate)
+[![Build History](https://buildstats.info/travisci/chart/mediatechsolutions/persistent-retry-template?branch=master)](https://travis-ci.org/mediatechsolutions/persistent-retry-template)
+[![NuGet Version](https://buildstats.info/nuget/persistentretrytemplate?includePreReleases=true)](https://www.nuget.org/packages/PersistentRetryTemplate)
 [![Build Status](https://travis-ci.org/mediatechsolutions/persistent-retry-template.svg?branch=master)](https://travis-ci.org/mediatechsolutions/persistent-retry-template)
+
 
 ## Why PersistentRetryTemplate
 
