@@ -31,7 +31,7 @@ namespace PersistentRetryTemplate.Retry.RetryPolicies
             DateTime startTime = DateTime.Now;
             policy.BackOff();
             TimeSpan difference = DateTime.Now - startTime;
-            Assert.True(difference - reference < TimeSpan.FromMilliseconds(10));
+            Assert.True(difference - reference < TimeSpan.FromMilliseconds(20));
         }
     }
 }

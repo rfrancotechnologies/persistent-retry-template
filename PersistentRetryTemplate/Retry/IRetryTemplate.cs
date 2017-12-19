@@ -15,6 +15,8 @@ namespace PersistentRetryTemplate.Retry
 
         IEnumerable<PendingRetry<T>> GetPendingRetries<T>(string operationId);
 
+        PendingRetry<T> TakePendingRetry<T>(string operationId);
+
         R DoExecute<T, R>(PendingRetry<T> pendingRetry, Func<T, R> retryCallback, Func<T, R> recoveryCallback, 
                 CancellationToken cancellationToken);
     }

@@ -21,12 +21,12 @@ namespace PersistentRetryTemplate.Retry.RetryPolicies
             DateTime startTime = DateTime.Now;
             policy.BackOff();
             TimeSpan difference = DateTime.Now - startTime;
-            Assert.True(difference - testDelay < TimeSpan.FromMilliseconds(10));
+            Assert.True(difference - testDelay < TimeSpan.FromMilliseconds(20));
 
             startTime = DateTime.Now;
             policy.BackOff();
             difference = DateTime.Now - startTime;
-            Assert.True(difference - testDelay < TimeSpan.FromMilliseconds(10));
+            Assert.True(difference - testDelay < TimeSpan.FromMilliseconds(20));
         }
     }
 }

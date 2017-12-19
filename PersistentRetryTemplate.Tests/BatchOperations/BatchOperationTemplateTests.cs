@@ -8,6 +8,7 @@ using PersistentRetryTemplate.Retry.RetryPolicies;
 using Xunit;
 using System.Linq;
 using System.Collections.Generic;
+using LiteDB;
 
 namespace PersistentRetryTemplate.Retry
 {
@@ -16,7 +17,7 @@ namespace PersistentRetryTemplate.Retry
         [Fact]
         public void ShouldListSavedBatchOperationsInThePendingListing() 
         {
-            BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(Path.GetTempFileName());
+            BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(new LiteDatabase(Path.GetTempFileName()));
 
             string testOperationId = "test.operation";
             var batchOperation = batchOperationTemplate.StartBatchOperation<string>(testOperationId);
@@ -28,24 +29,30 @@ namespace PersistentRetryTemplate.Retry
         public void ShouldPersistTheBatchOperationsAfterCreatingNewInstancesOfTheBatchOperationTemplate() 
         {
             string tempFileName = Path.GetTempFileName();
-            BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(tempFileName);
-
             string testOperationId = "test.operation";
-            var batchOperation = batchOperationTemplate.StartBatchOperation<string>(testOperationId);
 
-            batchOperationTemplate = new BatchOperationTemplate(tempFileName);
-            var batchOperations = batchOperationTemplate.GetPendingBatchOperations<string>(testOperationId);
-            Assert.Contains<BatchOperation<string>>(batchOperations, (x) => x.OperationId == testOperationId);
+            using (var database = new LiteDatabase(tempFileName))
+            {
+                BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(database);
+                batchOperationTemplate.StartBatchOperation<string>(testOperationId);
+            }
+
+            using (var database = new LiteDatabase(tempFileName))
+            {
+                BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(database);
+                var batchOperations = batchOperationTemplate.GetPendingBatchOperations<string>(testOperationId);
+                Assert.Contains<BatchOperation<string>>(batchOperations, (x) => x.OperationId == testOperationId);
+            }
         }
 
         [Fact]
         public void ShouldNotListCompletedBatchOperationsInThePendingListing() 
         {
-            BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(Path.GetTempFileName());
+            BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(new LiteDatabase(Path.GetTempFileName()));
 
             string testOperationId = "test.operation";
             var batchOperation = batchOperationTemplate.StartBatchOperation<string>(testOperationId);
-            batchOperationTemplate.CompleteBatch(batchOperation);
+            batchOperationTemplate.Complete(batchOperation);
 
             var batchOperations = batchOperationTemplate.GetPendingBatchOperations<string>(testOperationId);
             Assert.DoesNotContain<BatchOperation<string>>(batchOperations, (x) => x.OperationId == testOperationId);
@@ -55,43 +62,49 @@ namespace PersistentRetryTemplate.Retry
         public void ShouldPersistTheBatchOperationDataEvenAfterCreatingNewInstancesOfTheBatchOperationTemplate() 
         {
             string tempFileName = Path.GetTempFileName();
-            BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(tempFileName);
-
             string testOperationId = "test.operation";
             string testBatchOperationData = "test data";
-            var batchOperation = batchOperationTemplate.StartBatchOperation<string>(testOperationId);
-            batchOperationTemplate.AddBatchOperationData(batchOperation, testBatchOperationData);
 
-            batchOperationTemplate = new BatchOperationTemplate(tempFileName);
-            var batchOperations = batchOperationTemplate.GetPendingBatchOperations<string>(testOperationId);
-            var obtainedBatchOperation = batchOperations.FirstOrDefault((x) => x.OperationId == testOperationId);
-            Assert.NotNull(obtainedBatchOperation);
-            Assert.Contains<string>(testBatchOperationData, obtainedBatchOperation.BatchData);
+            using (var database = new LiteDatabase(tempFileName))
+            {
+                BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(database);
+                var batchOperation = batchOperationTemplate.StartBatchOperation<string>(testOperationId);
+                batchOperationTemplate.AddBatchOperationData(batchOperation, testBatchOperationData);
+            }
+
+            using (var database = new LiteDatabase(tempFileName))
+            {
+                BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(database);
+                var batchOperations = batchOperationTemplate.GetPendingBatchOperations<string>(testOperationId);
+                var obtainedBatchOperation = batchOperations.FirstOrDefault((x) => x.OperationId == testOperationId);
+                Assert.NotNull(obtainedBatchOperation);
+                Assert.Contains<string>(testBatchOperationData, obtainedBatchOperation.BatchData);
+            }
         }
 
         [Fact]
         public void ShouldSaveANewPendingRetryWhenSavingTheBatchRecoveryCallForRetries()
         {
             string tempFileName = Path.GetTempFileName();
-            BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(tempFileName);
+            BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(new LiteDatabase(Path.GetTempFileName()));
 
             string testOperationId = "test.operation";
             var batchOperation = batchOperationTemplate.StartBatchOperation<string>(testOperationId);
 
             Mock<IRetryTemplate> mockRetryTemplate = new Mock<IRetryTemplate>();
-            batchOperationTemplate.SaveRecoveryCallbackForRetries(mockRetryTemplate.Object, batchOperation);            
+            batchOperationTemplate.CompleteWithFinishingCallback(mockRetryTemplate.Object, batchOperation);            
             mockRetryTemplate.Verify(x => x.SaveForRetry(testOperationId, It.IsAny<List<string>>()));
         }
 
         [Fact]
         public void ShouldNotListBatchOperationsWhoseRecoveryHasBeenSavedForRetriesInThePendingListing() 
         {
-            BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(Path.GetTempFileName());
+            BatchOperationTemplate batchOperationTemplate = new BatchOperationTemplate(new LiteDatabase(Path.GetTempFileName()));
 
             string testOperationId = "test.operation";
             var batchOperation = batchOperationTemplate.StartBatchOperation<string>(testOperationId);
             Mock<IRetryTemplate> mockRetryTemplate = new Mock<IRetryTemplate>();
-            batchOperationTemplate.SaveRecoveryCallbackForRetries(mockRetryTemplate.Object, batchOperation);            
+            batchOperationTemplate.CompleteWithFinishingCallback(mockRetryTemplate.Object, batchOperation);            
 
             var batchOperations = batchOperationTemplate.GetPendingBatchOperations<string>(testOperationId);
             Assert.DoesNotContain<BatchOperation<string>>(batchOperations, (x) => x.OperationId == testOperationId);

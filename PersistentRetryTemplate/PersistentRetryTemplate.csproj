@@ -1,17 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.4</TargetFrameworks>
-    <Version>0.1.1-alpha</Version>
+    <TargetFrameworks>netstandard1.4;net4.5</TargetFrameworks>
+    <Version>0.3.0-alpha</Version>
     <PackageId>PersistentRetryTemplate</PackageId>
     <Title>PersistentRetryTemplate</Title>
+    <Description>.NET library for persistent retries in embedded devices and standalone applications.</Description>
     <Authors>rubms;mediatechsolutions</Authors>
     <Copyright>Copyright Mediatech Solutions 2017</Copyright>
     <PackageLicenseUrl>https://www.gnu.org/licenses/lgpl-3.0.en.html</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/mediatechsolutions/persistent-retry-template</PackageProjectUrl>
-    <PackageReleaseNotes>First version.</PackageReleaseNotes>
     <PackageTags>Retries Retry Template Persistence</PackageTags>
     <IncludeSource>false</IncludeSource>
-    <Description>.NET library for persistent retries.</Description>
+    <PackageReleaseNotes>
+      Slightly changed the meaning and renamed the complete operations in BatchOperationTemplate.
+    </PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="LiteDB" Version="4.0.0" />

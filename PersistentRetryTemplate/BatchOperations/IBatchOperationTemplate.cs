@@ -10,9 +10,9 @@ namespace PersistentRetryTemplate.BatchOperations
 
         IEnumerable<BatchOperation<T>> GetPendingBatchOperations<T>(string operationId);
 
-        void CompleteBatch<T>(BatchOperation<T> batchOperation);
+        void Complete<T>(BatchOperation<T> batchOperation);
 
-        PendingRetry<List<T>> SaveRecoveryCallbackForRetries<T>(IRetryTemplate retryTemplate, BatchOperation<T> batchOperation);
+        PendingRetry<List<T>> CompleteWithFinishingCallback<T>(IRetryTemplate retryTemplate, BatchOperation<T> batchOperation);
 
         void AddBatchOperationData<T>(BatchOperation<T> batchOperation, T data);
     }
