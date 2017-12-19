@@ -135,10 +135,11 @@ backOffPolicy.MaxInterval = TimeSpan.FromMilliseconds(300);
 backOffPolicy.Multiplier = 2;
 retryTemplate.BackOffPolicy = backOffPolicy;
 ```
-It accepts three configuration properties:
-	* `InitialInterval`: the amount of time that will be waited in the first retry.
-	* `Multiplier`: the amount that multiplies the current interval in each retry. In the first retry the wait interval will be `InitialInterval` and in subsequent retries the wait interval will be the previous interval multiplied by `Multiplier`.
-	* `MaxInterval`: the maximum amount of time that will be waited in any retry. 
+`ExponentialBackOffPolicy` accepts three configuration properties:
+
+* `InitialInterval`: the amount of time that will be waited in the first retry.
+* `Multiplier`: the amount that multiplies the current interval in each retry. In the first retry the wait interval will be `InitialInterval` and in subsequent retries the wait interval will be the previous interval multiplied by `Multiplier`.
+* `MaxInterval`: the maximum amount of time that will be waited in any retry. 
 
 
 #### Listing Pending Retries
