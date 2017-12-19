@@ -81,7 +81,7 @@ retryTemplate.RetryPolicy = new SimpleRetryPolicy(5);
 
 `TimeoutRetryPolicy` allows to retry an operation until a specified timeout is exceeded:
 ```csharp
-RetryTemplate retryTemplate = new RetryTemplate(fileName);
+RetryTemplate retryTemplate = new RetryTemplate(database);
 retryTemplate.RetryPolicy = new TimeoutRetryPolicy(TimeSpan.FromSeconds(30));
 ```
 
@@ -99,7 +99,7 @@ In the previous example, occurrences of `Exception1` or any of its children will
 
 Finally, in addition to specific exceptions, it is possible to specify a default retriability for all those exceptions that are not included in the specific exceptions (by default, false):
 ```csharp
-RetryTemplate retryTemplate = new RetryTemplate(fileName);
+RetryTemplate retryTemplate = new RetryTemplate(database);
 
 var specifiedExceptions = new Dictionary<Type, bool>();
 specifiedExceptions.Add(typeof(Exception2), false);
