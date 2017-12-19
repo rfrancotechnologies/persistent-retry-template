@@ -2,8 +2,10 @@
 
 .NET library for retrying operations with persistence.
 
-[![NuGet Version](https://img.shields.io/nuget/v/PersistentRetryTemplate.svg?style=flat)](https://www.nuget.org/packages/PersistentRetryTemplate)
+[![Build History](https://buildstats.info/travisci/chart/mediatechsolutions/persistent-retry-template?branch=master)](https://travis-ci.org/mediatechsolutions/persistent-retry-template)
+[![NuGet Version](https://buildstats.info/nuget/persistentretrytemplate?includePreReleases=true)](https://www.nuget.org/packages/PersistentRetryTemplate)
 [![Build Status](https://travis-ci.org/mediatechsolutions/persistent-retry-template.svg?branch=master)](https://travis-ci.org/mediatechsolutions/persistent-retry-template)
+
 
 ## Why PersistentRetryTemplate
 
@@ -133,10 +135,11 @@ backOffPolicy.MaxInterval = TimeSpan.FromMilliseconds(300);
 backOffPolicy.Multiplier = 2;
 retryTemplate.BackOffPolicy = backOffPolicy;
 ```
-It accepts three configuration properties:
-	* `InitialInterval`: the amount of time that will be waited in the first retry.
-	* `Multiplier`: the amount that multiplies the current interval in each retry. In the first retry the wait interval will be `InitialInterval` and in subsequent retries the wait interval will be the previous interval multiplied by `Multiplier`.
-	* `MaxInterval`: the maximum amount of time that will be waited in any retry. 
+`ExponentialBackOffPolicy` accepts three configuration properties:
+
+* `InitialInterval`: the amount of time that will be waited in the first retry.
+* `Multiplier`: the amount that multiplies the current interval in each retry. In the first retry the wait interval will be `InitialInterval` and in subsequent retries the wait interval will be the previous interval multiplied by `Multiplier`.
+* `MaxInterval`: the maximum amount of time that will be waited in any retry. 
 
 If no back-off policy is explicitly specified for a `RetryTemplate`, an `ExponentialBackOffPolicy` with an initial interval of 100 milliseconds, a maximum interval of 30 seconds, and a multipler by 2 will be used by default.
 
