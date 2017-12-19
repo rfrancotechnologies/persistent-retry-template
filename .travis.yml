@@ -3,6 +3,8 @@ mono: none
 dotnet: 1.1.5
 script:
  - dotnet restore
+ - cd PersistentRetryTemplate
+ - dotnet build -f netstandard1.4
+ - cd ../PersistentRetryTemplate.Tests
  - dotnet build
- - cd PersistentRetryTemplate.Tests
  - dotnet test
