@@ -48,11 +48,14 @@ namespace PersistentRetryTemplate.Retry
             // Create index for the OperationId field
             collection.EnsureIndex(x => x.OperationId);
             
-            collection.Insert(pendingRetry);
+            lock(this) 
+            {
+                collection.Insert(pendingRetry);
 
-            BlockingCollection<PendingRetry<T>> blockingRetriesCollection = blockingOperationCollections.GetOrAdd(operationId, 
-                    new BlockingCollection<PendingRetry<T>>()) as BlockingCollection<PendingRetry<T>>;
-            blockingRetriesCollection.Add(pendingRetry);
+                BlockingCollection<PendingRetry<T>> blockingRetriesCollection = blockingOperationCollections.GetOrAdd(operationId, 
+                        new BlockingCollection<PendingRetry<T>>()) as BlockingCollection<PendingRetry<T>>;
+                blockingRetriesCollection.Add(pendingRetry);
+            }
 
             return pendingRetry;
         }
@@ -158,11 +161,14 @@ namespace PersistentRetryTemplate.Retry
         {
             BlockingCollection<PendingRetry<T>> blockingCollection = blockingOperationCollections.GetOrAdd(operationId, 
                     new BlockingCollection<PendingRetry<T>>()) as BlockingCollection<PendingRetry<T>>;
-            if (blockingCollection.Count == 0)
+            lock(this)
             {
-                var pendingRetries = GetPendingRetries<T>(operationId);
-                foreach (var pendingRetry in pendingRetries)
-                    blockingCollection.Add(pendingRetry);
+                if (blockingCollection.Count == 0)
+                {
+                    var pendingRetries = GetPendingRetries<T>(operationId);
+                    foreach (var pendingRetry in pendingRetries)
+                        blockingCollection.Add(pendingRetry);
+                }
             }
             return blockingCollection.Take();
         }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard1.4;net4.5</TargetFrameworks>
-    <Version>0.3.0-alpha</Version>
+    <Version>0.3.1</Version>
     <PackageId>PersistentRetryTemplate</PackageId>
     <Title>PersistentRetryTemplate</Title>
     <Description>.NET library for persistent retries in embedded devices and standalone applications.</Description>
@@ -12,7 +12,7 @@
     <PackageTags>Retries Retry Template Persistence</PackageTags>
     <IncludeSource>false</IncludeSource>
     <PackageReleaseNotes>
-      Slightly changed the meaning and renamed the complete operations in BatchOperationTemplate.
+      Fixed bug: in multithreaded scenarios it was possible to consume pending retries before they were written in the database, mistakenly duplicating them.
     </PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
