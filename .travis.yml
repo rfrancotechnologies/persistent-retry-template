@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: 1.1.5
+dotnet: 2.2.103
 script:
  - dotnet restore
  - cd PersistentRetryTemplate
