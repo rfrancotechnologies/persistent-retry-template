@@ -92,8 +92,13 @@ namespace PersistentRetryTemplate.Retry
                 try {
                     lastException = null;
                     R result = retryCallback.Invoke(pendingRetry.Argument);
-                    collection.Delete(pendingRetry.Id);
+                    if (!collection.Delete(pendingRetry.Id))
+                        throw new DeleteRetryException("The pending retry document cannot be found on database");
                     return result;
+                }
+                catch (DeleteRetryException)
+                {
+                    throw;
                 }
                 catch (Exception e) 
                 {
