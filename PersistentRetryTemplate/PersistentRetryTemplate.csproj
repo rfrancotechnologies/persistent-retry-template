@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard1.4;net4.5</TargetFrameworks>
-    <Version>0.3.1</Version>
+    <Version>0.4.0</Version>
     <PackageId>PersistentRetryTemplate</PackageId>
     <Title>PersistentRetryTemplate</Title>
     <Description>.NET library for persistent retries in embedded devices and standalone applications.</Description>
     <Authors>rubms;mediatechsolutions</Authors>
     <Copyright>Copyright Mediatech Solutions 2017</Copyright>
-    <PackageLicenseUrl>https://www.gnu.org/licenses/lgpl-3.0.en.html</PackageLicenseUrl>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/mediatechsolutions/persistent-retry-template</PackageProjectUrl>
     <PackageTags>Retries Retry Template Persistence</PackageTags>
     <IncludeSource>false</IncludeSource>
