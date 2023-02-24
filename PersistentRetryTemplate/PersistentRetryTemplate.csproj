@@ -16,6 +16,6 @@
     </PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LiteDB" Version="4.0.0" />
+    <PackageReference Include="LiteDB" Version="5.0.13" />
   </ItemGroup>
 </Project>
